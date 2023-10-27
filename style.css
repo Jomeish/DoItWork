@@ -24,3 +24,9 @@
 .col2 {
     text-align: center;
 }
+
+.leftNav {
+    border: solid white 1px;
+    text-align: center;
+    height: 70vh;
+}
