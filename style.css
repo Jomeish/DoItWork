@@ -1,0 +1,26 @@
+/* Path: style.css */
+.title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5em;
+    text-align: center;
+    color: #ffffff;
+    margin-top: 20px;
+  }
+
+.body {
+    background-image: linear-gradient(black, rgb(29, 29, 48));
+    color: rgb(255, 255, 255);
+    min-height: 100vh;
+}
+
+.row1 {
+    border: solid 1px #ffffff;  
+}
+
+.col1 {
+    text-align: center;
+}
+
+.col2 {
+    text-align: center;
+}
