@@ -3,21 +3,21 @@
 .card {
   width: 120px;
   height: 170px;
-  background: rgb(236, 236, 236);
+  background: rgb(255, 255, 255);
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   position: absolute;
   cursor: grab; /* Add this line to set the cursor style */
-  transition: z-index 0.1s ease;
   user-select: none;
+  transition: left 0.1s ease, top 0.1s ease;
 }
 
 .snap-area {
-  width: 144px;
-  height: 204px;
+  width: 70%;
+  height: 70%;
   background-color: #ff6868;
   position: absolute;
-  top: 80px;
-  left: 150px;
+  top: 10%;
+  left: 15%;
   border: 2px dashed #2c3e50;
 }
 
