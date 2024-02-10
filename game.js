@@ -3,7 +3,13 @@ var drawPile = [
     "1.",
     "2.",
     "3.",
-    "4."
+    "4.",
+    "5.",
+    "6.",
+    "7.",
+    "8.",
+    "9.",
+    "10."
     // Add more texts as needed
 ];
 
@@ -23,6 +29,8 @@ function draw() {
       return drawnCard;
 }
 
+cardOffset = 0;
+
 function drawButton() {
 
     if (drawPile.length !== 0) {
@@ -36,6 +44,15 @@ function drawButton() {
     document.body.appendChild(newDiv);
     newDiv.addEventListener('click', moveDiv);
     // makeElementDraggable(newDiv);
+    function moveDiv() {
+      // Change the position on the first click
+      cardOffset = cardOffset + 3;
+      nextCardPos = cardOffset + 20;
+      document.getElementById(newDiv.id).style.left = nextCardPos + '%';
+      document.getElementById(newDiv.id).style.top = '75' + '%'; 
+      // // Remove the event listener after the first click
+      document.getElementById(newDiv.id).removeEventListener('click', moveDiv);
+    }
     }
 
 }
@@ -47,70 +64,50 @@ highestZIndex = 2;
 let isDragging = false;
 let cardSnapped = null;
 
-function moveDiv() {
-    // Change the position on the first click
-    document.getElementById('movableDiv').style.left = '200px';
-    document.getElementById('movableDiv').style.top = '200px';
-    
-    // Remove the event listener after the first click
-    document.getElementById('movableDiv').removeEventListener('click', moveDiv);
-  }
+
 
 
 document.addEventListener('click', function(event) {
-    // Check if the clicked element has the class "card"
-    if (event.target.classList.contains('card')) {
-      // Dragging logic
-      event.target.style.zIndex = highestZIndex;
-      highestZIndex++;
-      let isDragging = false;
-      const card = event.target;
-      // Your logic for handling the click on a "card" element
-      console.log('Card clicked!', card.id);
+  // Check if the clicked element has the class "card"
+  if (event.target.classList.contains('card')) {
+    // Dragging logic
+    event.target.style.zIndex = highestZIndex;
+    highestZIndex++;
+    let isDragging = false;
+    const card = event.target;
+    const cardRect = card.getBoundingClientRect();
+    const offsetX = cardRect.width / 2;
+    const offsetY = cardRect.height / 2;
+    // Your logic for handling the click on a "card" element
+    console.log('Card clicked!', card.id);
 
-      card.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        card.style.cursor = 'grabbing';
-      });
+    card.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      card.style.cursor = 'grabbing';
+    });
 
-      document.addEventListener('mousemove', (e) => {
-        if (isDragging) {
-          const x = e.clientX - card.clientWidth / 2;
-          const y = e.clientY - card.clientHeight / 2;
-          card.style.left = `${x}px`;
-          card.style.top = `${y}px`;
-        }
-      });
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        let x = e.clientX - offsetX;
+        let y = e.clientY - offsetY;
+        
+        // Constrain movement within the viewport
+        x = Math.max(x, 0);
+        y = Math.max(y, 0);
+        x = Math.min(x, window.innerWidth - cardRect.width);
+        y = Math.min(y, window.innerHeight - cardRect.height);
 
-      document.addEventListener('mouseup', () => {
-        if (isDragging) {
-          isDragging = false;
-          card.style.cursor = 'grab';
+        card.style.left = `${x}px`;
+        card.style.top = `${y}px`;
 
-          const cardRect = card.getBoundingClientRect();
-          const snapAreaRect = document.querySelector('.snap-area').getBoundingClientRect();
+      }
+    });
 
-          // Check if the card is within the snap area
-          if (
-            cardRect.left >= snapAreaRect.left &&
-            cardRect.right <= snapAreaRect.right &&
-            cardRect.top >= snapAreaRect.top &&
-            cardRect.bottom <= snapAreaRect.bottom &&
-            cardSnapped == null
-          ) {
-            // Snap the card into place
-            card.style.left = `${snapAreaRect.left + 15}px`;
-            card.style.top = `${snapAreaRect.top + 18}px`;
-            console.log("snapped " + card.id);
-            cardSnapped = card.id;
-            document.querySelector('.snap-area').style.backgroundColor = "#3ded97";
-            outputElement.textContent += '-  ' + cardSnapped + ' is locked in'
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+      card.style.cursor = 'grab';
+    });
 
-          }
-        }
-
-
-      });
     }
   });
 
@@ -132,13 +129,10 @@ function trackMouse() {
       event.clientY > snapAreaRect.bottom
        ) {
         outputElement.textContent += ' - out of div';
-        if (cardSnapped === event.target.id){
-            outputElement.textContent += ' - ' + cardSnapped + ' is released';
-            cardSnapped = null;
-            document.querySelector('.snap-area').style.backgroundColor = "#ff6868";
-        }
+        document.querySelector('.snap-area').style.backgroundColor = "#ff6868";
       } else {
         outputElement.textContent += ' - in div';
+        document.querySelector('.snap-area').style.backgroundColor = "rgb(17, 163, 107)";
       }
     });
   }
