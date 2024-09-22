@@ -1,0 +1,10 @@
+body #mapDiv{ 
+    background-image: url("Amoi.png");
+    background-color: red;
+    margin-left: auto;
+    margin-right: auto;
+    height: 97vh;
+    width: 39.3vw;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
