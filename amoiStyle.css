@@ -1,11 +1,14 @@
-body #mapDiv{ 
-    background-image: url("Amoi.png");
+#map { 
+    position: relative;
+    height: 90vh;
     background-color: red;
+    display: block;
     margin-left: auto;
     margin-right: auto;
-    height: 100vh;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
+}
+
+.map-container {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    border: 15px solid orange;
 }
